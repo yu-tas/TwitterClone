@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :set_tweet, only: [:show, :edit, :update, :destroy] # destroyアクションを追加
+
   def index
     @posts = Post.all
   end
@@ -17,13 +19,34 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
   end  
+  
+  def edit
+  end
+
+  def update
+    
+    if @post.update(post_params)
+      redirect_to post_path, notice: "tweetを編集しました！"
+    else 
+      render :edit
+    end
+  end
+
+  def destroy
+      @post.destroy
+      redirect_to posts_path, notice:"tweetを削除しました！"    
+  end
   
 private                                                       #予期せぬところからblog_paramsを呼び出せないようにするため
 
-  def post_params
-    params.require(:post).permit(:content)                    #送られてきたデータをパラメーターで取得
-  end
+def post_params
+  params.require(:post).permit(:content)                    #送られてきたデータをパラメーターで取得
 end
+
+def set_tweet
+  @post = Post.find(params[:id])
+end
+end
+
 
