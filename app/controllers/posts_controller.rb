@@ -47,10 +47,10 @@ class PostsController < ApplicationController
     render :new if @post.invalid?
   end
   
-private                                                       #予期せぬところからblog_paramsを呼び出せないようにするため
+private                                                      
 
 def post_params
-  params.require(:post).permit(:content)                    #送られてきたデータをパラメーターで取得
+  params.require(:post).permit(:content)                    
 end
 
 def set_tweet
